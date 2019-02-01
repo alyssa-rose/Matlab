@@ -1,0 +1,208 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>MainScript</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-02-21"><meta name="DC.source" content="MainScript.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%Alyssa Rose  HW4  2-19-18</span>
+<span class="comment">%loads in data</span>
+load <span class="string">ecgClean.mat</span>
+<span class="comment">%time vector generated</span>
+tvec = SetupTimeVector(length(ecgData),Fs);
+
+<span class="comment">%peaks in ecgData found</span>
+threshold = 1050;
+iPeaks = FindEcgPeaks(ecgData,threshold);
+
+<span class="comment">%heart rate calculated using previous 2 functions' values</span>
+instBPM =  CalcInstHR(tvec,iPeaks);
+
+<span class="comment">%output string made using heart rate data</span>
+outStr = CalcStats(instBPM);
+
+<span class="comment">%ecg plotted with peaks marked w/ red circles</span>
+figure
+subplot(2,1,1)
+plot(tvec,ecgData)
+xlabel(<span class="string">'Time,sec'</span>)
+ylabel(<span class="string">'ECG signal, A/D units'</span>)
+title(outStr)
+hold <span class="string">on</span>
+plot(tvec(iPeaks), ecgData(iPeaks),<span class="string">'ro'</span>)
+hold <span class="string">off</span>
+
+<span class="comment">%inst. beats per minute plotted</span>
+subplot(2,1,2)
+plot(instBPM,<span class="string">'--s'</span>)
+xlabel(<span class="string">'Beat #'</span>)
+ylabel(<span class="string">'Instantaneous HR,BPM'</span>)
+<span class="comment">%generated plots saved as jpeg file</span>
+saveas(gcf, <span class="string">'figure.jpg'</span>)
+<span class="comment">%{
+</span><span class="comment">1.) When threshold = 0, then every point will be labeled
+</span><span class="comment">as a peak when MainScript is run, and the entire graph is
+</span><span class="comment">covered in red dots.
+</span><span class="comment">   mean: 6048    median: 5400
+</span><span class="comment">
+</span><span class="comment">2.)When threshold = 1120, the top graph appears normal,
+</span><span class="comment">whereas the instBPM graph returns values that seem impossible
+</span><span class="comment">or unlikely for BPM values. This happens due to the limited data,
+</span><span class="comment">and small difference in magnitude of peaks (since they are all high).
+</span><span class="comment">   mean: 64      median: 73
+</span><span class="comment">the median value appears to be closer to expected values, and would
+</span><span class="comment">be more accurate since it diminshes the effects of the drastic
+</span><span class="comment">differences in instBPM values.
+</span><span class="comment">
+</span><span class="comment">3.) Thresholds between 1030 and 1130 appeared to give believable values
+</span><span class="comment">for instBPM since the peaks were not too small or too high in value. If
+</span><span class="comment">the values were smaller or larger than these thresholds, the # of peaks
+</span><span class="comment">were too great or too small, resulting in drastic differences in peak
+</span><span class="comment">values or not enough peaks (skewing data).
+</span><span class="comment">
+</span><span class="comment">4.)The large distortion causes the instBPM to be out of range of normal
+</span><span class="comment">values, with the ecg peaks occuring at large values and appearing to
+</span><span class="comment">cluster around 12 sec.
+</span><span class="comment">    mean: 3821     median: 3600
+</span><span class="comment">neither value seems to be accurate, although median would be closer since
+</span><span class="comment">its value is less than the mean.
+</span><span class="comment">
+</span><span class="comment">5.)Setting the threshold to around 1100 causes the data
+</span><span class="comment">to fit into an expected range since this is where most major peaks occured.
+</span><span class="comment">    mean: 73      median: 83
+</span><span class="comment">the mean value is more accurate since it matches most closely with
+</span><span class="comment">previously calculated values
+</span><span class="comment">%}</span>
+</pre><img vspace="5" hspace="5" src="MainScript_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Alyssa Rose  HW4  2-19-18
+%loads in data
+load ecgClean.mat
+%time vector generated
+tvec = SetupTimeVector(length(ecgData),Fs);
+
+%peaks in ecgData found
+threshold = 1050;
+iPeaks = FindEcgPeaks(ecgData,threshold);
+
+%heart rate calculated using previous 2 functions' values
+instBPM =  CalcInstHR(tvec,iPeaks);
+
+%output string made using heart rate data
+outStr = CalcStats(instBPM);
+
+%ecg plotted with peaks marked w/ red circles
+figure
+subplot(2,1,1)
+plot(tvec,ecgData)
+xlabel('Time,sec')
+ylabel('ECG signal, A/D units')
+title(outStr)
+hold on
+plot(tvec(iPeaks), ecgData(iPeaks),'ro')
+hold off
+
+%inst. beats per minute plotted
+subplot(2,1,2)
+plot(instBPM,'REPLACE_WITH_DASH_DASHs')
+xlabel('Beat #')
+ylabel('Instantaneous HR,BPM')
+%generated plots saved as jpeg file
+saveas(gcf, 'figure.jpg')
+%{
+1.) When threshold = 0, then every point will be labeled
+as a peak when MainScript is run, and the entire graph is
+covered in red dots.
+   mean: 6048    median: 5400
+
+2.)When threshold = 1120, the top graph appears normal,
+whereas the instBPM graph returns values that seem impossible
+or unlikely for BPM values. This happens due to the limited data,
+and small difference in magnitude of peaks (since they are all high).
+   mean: 64      median: 73
+the median value appears to be closer to expected values, and would
+be more accurate since it diminshes the effects of the drastic
+differences in instBPM values.
+
+3.) Thresholds between 1030 and 1130 appeared to give believable values
+for instBPM since the peaks were not too small or too high in value. If
+the values were smaller or larger than these thresholds, the # of peaks
+were too great or too small, resulting in drastic differences in peak
+values or not enough peaks (skewing data).
+
+4.)The large distortion causes the instBPM to be out of range of normal
+values, with the ecg peaks occuring at large values and appearing to
+cluster around 12 sec.
+    mean: 3821     median: 3600
+neither value seems to be accurate, although median would be closer since
+its value is less than the mean.
+
+5.)Setting the threshold to around 1100 causes the data
+to fit into an expected range since this is where most major peaks occured.
+    mean: 73      median: 83
+the mean value is more accurate since it matches most closely with
+previously calculated values
+%}
+##### SOURCE END #####
+--></body></html>

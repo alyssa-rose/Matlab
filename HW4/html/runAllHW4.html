@@ -1,0 +1,310 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>runAllHW4</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-02-21"><meta name="DC.source" content="runAllHW4.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">list ECG project files</a></li><li><a href="#3">list and the vectorization problem</a></li><li><a href="#4">run ecg project</a></li></ul></div><pre class="codeinput"><span class="comment">% INSTRUCTIONS:</span>
+<span class="comment">% 1) save this file into the directory that holds your work</span>
+<span class="comment">% 2) make sure it runs without error</span>
+<span class="comment">% 3) publish this file to PDF.  There are two ways to do this:</span>
+<span class="comment">%    a) You can either use the 'Publish' tab, being sure to edit the</span>
+<span class="comment">%    publishing options so the output format is 'pdf', or</span>
+<span class="comment">%    b) run the commands below in the command window, one at a</span>
+<span class="comment">%    time: (without the comment symbol!)</span>
+<span class="comment">%    options.format = 'pdf';</span>
+<span class="comment">%    publish('runAllHW4',options);</span>
+<span class="comment">%</span>
+<span class="comment">% 4) There should then be a PDF file in the subdirectory 'html'</span>
+<span class="comment">%    that you can upload to TurnItIn.</span>
+<span class="comment">%    PLEASE DOUBLE-CHECK it has everything you need!!</span>
+
+<span class="comment">% prepare to run...</span>
+clear <span class="string">all</span>  <span class="comment">% clear out all variables</span>
+close <span class="string">all</span>  <span class="comment">% close any open figures</span>
+</pre><h2 id="2">list ECG project files</h2><pre class="codeinput">dbtype(<span class="string">'MainScript'</span>)
+fprintf(<span class="string">'\n --------------------------- \n'</span>)
+dbtype(<span class="string">'SetupTimeVector'</span>)
+fprintf(<span class="string">'\n --------------------------- \n'</span>)
+dbtype(<span class="string">'FindEcgPeaks'</span>)
+fprintf(<span class="string">'\n --------------------------- \n'</span>)
+dbtype(<span class="string">'CalcInstHR'</span>)
+fprintf(<span class="string">'\n --------------------------- \n'</span>)
+dbtype(<span class="string">'CalcStats'</span>)
+</pre><pre class="codeoutput">
+1     %Alyssa Rose  HW4  2-19-18
+2     %loads in data
+3     load ecgClean.mat
+4     %time vector generated
+5     tvec = SetupTimeVector(length(ecgData),Fs);
+6     
+7     %peaks in ecgData found
+8     threshold = 1050;
+9     iPeaks = FindEcgPeaks(ecgData,threshold);
+10    
+11    %heart rate calculated using previous 2 functions' values
+12    instBPM =  CalcInstHR(tvec,iPeaks);
+13    
+14    %output string made using heart rate data
+15    outStr = CalcStats(instBPM);
+16    
+17    %ecg plotted with peaks marked w/ red circles
+18    figure
+19    subplot(2,1,1)
+20    plot(tvec,ecgData)
+21    xlabel('Time,sec')
+22    ylabel('ECG signal, A/D units')
+23    title(outStr)
+24    hold on
+25    plot(tvec(iPeaks), ecgData(iPeaks),'ro')
+26    hold off
+27    
+28    %inst. beats per minute plotted
+29    subplot(2,1,2)
+30    plot(instBPM,'--s')
+31    xlabel('Beat #')
+32    ylabel('Instantaneous HR,BPM')
+33    %generated plots saved as jpeg file
+34    saveas(gcf, 'figure.jpg')
+
+ --------------------------- 
+
+1     function tvec = SetupTimeVector(npoints,Fs)
+2     %{
+3     returns a vector 'tvec' of times in seconds,
+4     of length npoints, starting at t=0 and
+5     spaced apart by 1/Fs seconds
+6     
+7     Alyssa Rose  HW4  2-19-18
+8     %}
+9     
+10    %checks if values for npoints &amp; Fs are allowed
+11    if npoints &lt;= 0 | Fs &lt;= 0
+12        tvec = [];
+13        return
+14    %preallocates tvec
+15    %creates tvec by adding on a "step size" each loop
+16    else
+17        tvec = zeros(1,npoints);
+18        step = (1/Fs);
+19        for k = 2:npoints
+20            tvec(k) = step+tvec(k-1);
+21        end
+22    end
+23    
+24    return
+
+ --------------------------- 
+
+1     function iPeaks  = FindEcgPeaks(ecg,threshold)
+2     %{
+3     find samples in input vector 'ecg' that are
+4     peaks, and are above the value 'threshold'
+5     
+6     Alyssa Rose  HW4  2-19-18
+7     %}
+8     n=length(ecg);
+9     iPeaks = [];
+10    
+11    %checks if first value is a peak
+12    if (ecg(1) &gt; threshold) &amp;&amp; (ecg(1)&gt; ecg(2))
+13        iPeaks(1) = 1;
+14    end
+15    %checks if current value is local max and if
+16    %the peak is greater than the threshold
+17    for m = 2:(n-1)
+18        if (ecg(m)&gt;ecg(m-1))&amp;&amp; (ecg(m)&gt;ecg(m+1))
+19            if ecg(m)&gt;threshold
+20                iPeaks = [iPeaks, m];
+21            end
+22        end
+23    end
+24    
+25    %checks if last value is a peak
+26    if (ecg(n)&gt; ecg(n-1)) &amp;&amp; (ecg(n) &gt; threshold)
+27        iPeaks(n) = n;
+28    end
+29    
+30    %gets rid of zeros, only stores values of peaks
+31    delete = iPeaks ~= 0;
+32    iPeaks = [iPeaks(delete)];
+33    
+34    return
+
+ --------------------------- 
+
+1     function instBPM = CalcInstHR(tvec,iPk)
+2     %{
+3     given a time vector tvec and list of samples for peaks,
+4     returns a vector instBPM with the instantaneous beats per minute
+5     
+6     Alyssa Rose  HW4  2-19-18
+7     %}
+8     
+9     %converts sec to minutes and creates empty vector
+10    tvec = tvec./60;
+11    instBPM = [];
+12    if length(iPk)&lt;2
+13        instBPM = 0;
+14        return
+15    end
+16    %calculates heart rate and stores it in instBPM
+17    for k =1:length(iPk)-1
+18        heartRate = 1/(tvec(iPk(k+1))- tvec(iPk(k)));
+19        instBPM = [instBPM heartRate];
+20    end
+21    return
+
+ --------------------------- 
+
+1     function outStr = CalcStats(instBPM)
+2     %{
+3     computes statistics (mean, median, std dev)
+4     and defines output string
+5     
+6     Alyssa Rose  HW4  2-19-18
+7     %}
+8     
+9     %calculates whole number mean value
+10    X = mean(instBPM);
+11    X=round(X);
+12    %calculates whole number median value
+13    Y = median(instBPM);
+14    Y = round(Y);
+15    %calculates standard deviation
+16    Z = std(instBPM);
+17    %prints out values w/ stdev to 1 decimal
+18    outStr = sprintf('Heartrate, BPM: mean %d, median %d, stdev %.1f',X,Y,Z);
+19    return
+</pre><h2 id="3">list and the vectorization problem</h2><pre class="codeinput">fprintf(<span class="string">'\n\n --------------------------- \n\n'</span>)
+type(<span class="string">'HotTubVectors'</span>)
+</pre><pre class="codeoutput">
+
+ --------------------------- 
+
+
+function [tempsHot, timesCold, nOK] = HotTubVectors(time,temp)
+%{
+Function takes in 2 equal sized vectors; temp(Fahrenheit) &amp; time (hours);
+and determines how well the hot tub stays within temp range( 102&lt;=temp&lt;=105).
+
+Alyssa Rose  HW4  2-19-18
+%}
+%extracts temperatures &gt; 105 degrees
+tempsHot = temp(temp &gt; 105);
+%extracts times when temperature &lt; 102 degrees
+%timesCold = time(temp &lt; 102);
+t = find(temp &lt; 102);
+timesCold = time(t);
+%finds # hours when hot tub was in desired range
+nOK= sum((temp &gt;= 102) &amp; (temp &lt;= 105));
+return
+</pre><h2 id="4">run ecg project</h2><pre class="codeinput">fprintf(<span class="string">'\n\n --------------------------- \n\n'</span>)
+MainScript
+</pre><pre class="codeoutput">
+
+ --------------------------- 
+
+</pre><img vspace="5" hspace="5" src="runAllHW4_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% INSTRUCTIONS: 
+% 1) save this file into the directory that holds your work
+% 2) make sure it runs without error
+% 3) publish this file to PDF.  There are two ways to do this:
+%    a) You can either use the 'Publish' tab, being sure to edit the
+%    publishing options so the output format is 'pdf', or 
+%    b) run the commands below in the command window, one at a 
+%    time: (without the comment symbol!)
+%    options.format = 'pdf';
+%    publish('runAllHW4',options);
+%
+% 4) There should then be a PDF file in the subdirectory 'html'
+%    that you can upload to TurnItIn. 
+%    PLEASE DOUBLE-CHECK it has everything you need!!
+
+% prepare to run...
+clear all  % clear out all variables
+close all  % close any open figures
+
+%% list ECG project files
+dbtype('MainScript')
+fprintf('\n REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- \n')
+dbtype('SetupTimeVector')
+fprintf('\n REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- \n')
+dbtype('FindEcgPeaks')
+fprintf('\n REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- \n')
+dbtype('CalcInstHR')
+fprintf('\n REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- \n')
+dbtype('CalcStats')
+
+%% list and the vectorization problem
+fprintf('\n\n REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- \n\n')
+type('HotTubVectors')
+
+%% run ecg project
+fprintf('\n\n REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- \n\n')
+MainScript
+##### SOURCE END #####
+--></body></html>

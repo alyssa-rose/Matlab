@@ -1,0 +1,292 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>RunAllHW8</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-04-01"><meta name="DC.source" content="RunAllHW8.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Problem 1</a></li><li><a href="#3">Problem 2</a></li><li><a href="#4">Problem 3</a></li><li><a href="#5">Problem 4</a></li><li><a href="#6">Problem 5</a></li></ul></div><pre class="codeinput"><span class="comment">% prepare to run...</span>
+clear <span class="string">all</span>  <span class="comment">% clear out all variables</span>
+close <span class="string">all</span>  <span class="comment">% close any open figures</span>
+</pre><h2 id="2">Problem 1</h2><pre class="codeinput">type(<span class="string">'MyHistogram.m'</span>)
+</pre><pre class="codeoutput">
+function [xCen, n] = MyHistogram(dataVec, nBins)
+%{
+takes in data vector and desired number of bins and 
+computes, edges, #elements in bins, and center pt of the bins
+
+Alyssa Rose HW8  03-28-18
+%}
+
+%finds max and mins in dataVec
+maxVec = max(dataVec);
+minVec = min(dataVec);
+%finds bin width from range of dataVec
+binWidth = (maxVec - minVec)/nBins;
+xCen=[];
+n=[];
+edge=[];
+
+%computes info for last element
+edge(nBins) = maxVec;
+edge(nBins-1) = maxVec - binWidth;
+xCen(nBins) = ((edge(nBins) + edge(nBins-1))/2);
+n(nBins) = length(find(edge(nBins-1)&lt;=dataVec &amp; edge(nBins)&gt;=dataVec));
+
+for k = 1:nBins-1
+    edge(1) = [minVec];
+    %computes rightward edge
+    edge(k+1) = edge(k) + binWidth;
+    %finds center pt
+    xCen(k) = ((edge(k+1) + edge(k))/2);
+    %finds #elements in each bun
+    n(k) = length(find(edge(k)&lt;=dataVec &amp; edge(k+1)&gt;dataVec));
+end
+end
+
+
+</pre><h2 id="3">Problem 2</h2><pre class="codeinput">type(<span class="string">'BBallStats.m'</span>)
+fprintf(<span class="string">'\n------------------------------------\n'</span>);
+BBallStats;
+</pre><pre class="codeoutput">
+load basketballData.mat
+%{ 
+graphs data using histograms and qqplots
+
+Alyssa Rose HW8  03-28-18
+%}
+figure(1)
+subplot(2,2,1)
+bar(MyHistogram(FieldGoalPercentage, 20))
+title('Field goal percentages')
+
+
+subplot(2,2,2)
+qqplot(MyHistogram(FieldGoalPercentage, 20))
+title('Field goal percentages')
+
+subplot(2,2,3)
+bar(MyHistogram(AveragePointsPerGame, 20))
+title('Average pts per game')
+xlabel('bins')
+ylabel('points') 
+
+subplot(2,2,4)
+qqplot(MyHistogram(AveragePointsPerGame,20))
+title('Average pts per game')
+%{
+the two right graphs appear to follow gaussian since
+their lines are mostly linear. The 2 left histogram graphs 
+do not appear to look graphically gaussian.
+%}
+figure(2)
+heightVec = (HeightFeet &gt;= 6.5)';
+boxplot(AveragePointsPerGame, heightVec)
+xlabel('Height: 1=&gt;6.5, 0&lt;6.5 ft')
+ylabel('Avg pts per game')
+title('Points per game vs height')
+%{
+Height does not seem to correlate with avg pts per game. 
+The taller players appear to have more range in pts scored
+but the shorter players have higher median pts.
+%}
+
+------------------------------------
+</pre><h2 id="4">Problem 3</h2><pre class="codeinput">type(<span class="string">'CalcRsquared.m'</span>)
+fprintf(<span class="string">'\n------------------------------------\n'</span>);
+type(<span class="string">'MyLinefit.m'</span>)
+</pre><h2 id="5">Problem 4</h2><pre class="codeinput">type(<span class="string">'TestLinearFit.m'</span>)
+fprintf(<span class="string">'\n------------------------------------\n'</span>);
+TestLinearFit;
+</pre><pre class="codeoutput">
+function [yTest,yFit, yFit1samp] = TestLinearFit
+%{
+tests MyLinefit function with pre chosen x, y, and b values
+
+Alyssa Rose HW8  03-28-18
+%}
+%creates variables
+x = [1,4,2,6,8,4,5,3,11,9];
+m = 2.145;
+b = 6.4532;
+%finds y vec from pre declared variables
+yTest = (m.*x)+b;
+
+%stores line approx of x and yTest in yFit
+[yFit,coeff,rSq] = MyLinefit(x,yTest,1);
+fprintf('True slope=%.5f True intercept=%.5f\nEst slope=%.5f Est intercept=%.5f\n\n', m,b,coeff(1,1), coeff(2,1))
+
+%intentionally passes in faulty parameters 
+%to check NaN returned
+[yFit1samp,coeff,rSq] = MyLinefit(x,[1],1);
+fprintf('x || y value doesn''t meet conditions, yFit1samp=%f', yFit1samp);
+end
+
+------------------------------------
+True slope=2.14500 True intercept=6.45320
+Est slope=2.14500 Est intercept=6.45320
+
+x || y value doesn't meet conditions, yFit1samp=NaN</pre><img vspace="5" hspace="5" src="RunAllHW8_03.png" alt=""> <h2 id="6">Problem 5</h2><pre class="codeinput">type(<span class="string">'BasketballCorrelations.m'</span>);
+fprintf(<span class="string">'\n------------------------------------\n'</span>);
+BasketballCorrelations
+</pre><pre class="codeoutput">
+load basketballData.mat
+%{
+finds correlations from data in basketballData
+
+Alyssa Rose HW8  03-28-18
+%}
+figure(2)
+%creates scatter plot height vs. weight
+subplot(2,3,1)
+scatter(HeightFeet, WeightLbs);
+MyLinefit(HeightFeet, WeightLbs,1);
+xlabel('height')
+ylabel('weight')
+%there is a strong correlation with height vs. weight, since the R value
+%is close to 1. There is 1 outlier (tall but low weight)
+
+%creates scatter plot height vs. field goal %
+subplot(2,3,2)
+scatter(HeightFeet, FieldGoalPercentage);
+MyLinefit(HeightFeet, FieldGoalPercentage,1);
+xlabel('height')
+ylabel('field goal percentages')
+%not a strong correlation; many pts deviate from the line although the R
+%value is closer to 1 than other graphs
+
+%creates scatter plot height vs. free throw %
+subplot(2,3,3)
+scatter(HeightFeet, FreeThrowPercentage);
+MyLinefit(HeightFeet, FreeThrowPercentage,1);
+xlabel('height')
+ylabel('free throw percentages')
+%moderate correlation; the R value deviated more than expected and their
+%is an outlier (very low %)
+
+%creates scatter plot weight vs. field goal %
+subplot(2,3,4)
+scatter(WeightLbs,FieldGoalPercentage,'g');
+MyLinefit(WeightLbs,FieldGoalPercentage,1);
+xlabel('weight')
+ylabel('field goal percentages')
+%appears to not be a strong correlation, R value predicts it to be true
+%about 25% of the time, considerable amount of outliers, especially
+%the low weight but mid field goal % . This seems to be more about random
+%correlation than actual causation, considering the low R value (but R 
+%values for weight vs field% and height vs. field% are extremely similar.
+
+
+%creates scatter plot free throw vs. avg pts
+subplot(2,3,5)
+scatter(FreeThrowPercentage, AveragePointsPerGame,'g');
+MyLinefit(FreeThrowPercentage, AveragePointsPerGame,1);
+xlabel('free throw percentages')
+ylabel('average points per games')
+%weakest correlation of all the graphs (lowest R value). Free throw % is
+%not a strong predictor for avg pts in game
+
+%creates scatter plot field goal vs. avg pts
+subplot(2,3,6)
+scatter(FieldGoalPercentage, AveragePointsPerGame,'g');
+MyLinefit(FieldGoalPercentage, AveragePointsPerGame,1);
+xlabel('field goal percentages')
+ylabel('average points per games')
+%many outliers and very weak correlation, although field goal % and avg pts
+%correlation is stronger than avg pts and free throw % (field goal more
+%important)
+
+------------------------------------
+</pre><img vspace="5" hspace="5" src="RunAllHW8_04.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+
+% prepare to run...
+clear all  % clear out all variables
+close all  % close any open figures
+
+%% Problem 1
+type('MyHistogram.m')
+
+
+%% Problem 2
+type('BBallStats.m')   
+fprintf('\nREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH\n');
+BBallStats;
+
+%% Problem 3
+type('CalcRsquared.m')
+fprintf('\nREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH\n');
+type('MyLinefit.m')
+
+%% Problem 4
+type('TestLinearFit.m')
+fprintf('\nREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH\n');
+TestLinearFit;
+
+%% Problem 5
+type('BasketballCorrelations.m');
+fprintf('\nREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH\n');
+BasketballCorrelations
+##### SOURCE END #####
+--></body></html>
